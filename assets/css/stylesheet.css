@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* CSS Document */
+.jumbotron {
+	margin: 20px;
+	padding: 20px;
+	text-align: center;
+}
+form {
+	margin: 20px; 
+	padding: 20px;
+}
+table {
+	padding: 10px;
+}
+th,
+td {
+	padding: 10px 5px;
+}
+td {
+	border-top: 2px solid gray;
+}

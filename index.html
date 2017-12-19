@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Train Schedule</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
+	
+</head>
+
+<body>
+	<div class="jumbotron">
+		<h1>Wanna go for a ride?</h1>
+		<h2>We are here to help.</h2>
+	</div>
+	<table>
+		<trow>
+			<th>Train Name</th>
+			<th>Destination</th>
+			<th>Frequency</th>
+			<th>Next Arrival</th>
+			<th>Minutes Away</th>
+		</trow>
+		<tbody id="new-train">
+					
+		</tbody>
+	</table>
+	
+	<form id="add-employee">
+			<h3>Add Train</h3>
+			 <div class="form-group">
+				<label for="name">Train Name</label>
+    			<textarea class="form-control" id="name" rows="1"></textarea>
+  			</div>
+			 <div class="form-group">
+				<label for="destination">Destination</label>
+    			<textarea class="form-control" id="destination" rows="1"></textarea>
+  			</div>
+			 <div class="form-group">
+				<label for="first-time">First Train Time (DD/MM/YY - ex:01/01/99)</label>
+    			<textarea class="form-control" id="first-time" rows="1"></textarea>
+  			</div>
+			 <div class="form-group">
+				<label for="frequency">Frequency</label>
+    			<textarea class="form-control" id="frequency" rows="1"></textarea>
+  			</div>
+			<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+		</form>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<script src="assets/javascript/app.js"></script>
+	<script src="assets/javascript/logic.js"></script>
+</body>
+</html>
