@@ -77,7 +77,7 @@ database.ref().on("child_added", function(childSnapshot) {
 	  //console.log(childSnapshot.val().timeAdded);
 
 //incoorperate moment 
-	var math = {
+	var mathVar = {
 		
 		nextTrain: "00:00",
 		minutesWait: 0,
@@ -92,53 +92,65 @@ database.ref().on("child_added", function(childSnapshot) {
 			
 			var firstH = firstTimeConv.slice(0, 2);
 			var firstM = firstTimeConv.slice(3, 5);
+		var firstHParsed = parseInt(firstH);
+		var firstMParsed = parseInt(firstM);
 						console.log("firstM: " + firstM);
 
-			var firstHourConv = firstH * 60;
-			var firstTotalMin = firstHourConv + firstM;
+			var firstHourConv = firstHParsed * 60;
+			var firstTotalMin = firstHourConv + firstMParsed;
+		var firstTotalMinParsed = parseInt(firstTotalMin);
 						console.log("First min total: " + firstTotalMin);
 			
 			var now = moment().format("HH:mm");
 						console.log("Now: " + now);
 			var nowH = now.slice(0,2);
 			var nowM = now.slice(3, 5);
+		var nowHParsed = parseInt(nowH);
+		var nowMParsed = parseInt(nowM);
 						console.log("nowM: " + nowM);
-			var nowHourConv = nowH * 60;
-			var nowTotalMin = nowHourConv + nowM;
+			var nowHourConv = nowHParsed * 60;
+		var nowTotalMin = nowHourConv + nowMParsed;
 						console.log("Now min total: " + nowTotalMin);
 			
 			var difTime = nowTotalMin - firstTotalMin;
 			//console.log("Difference in min: " + difTime);
 			minutesWait = freqTrain - (difTime % freqTrain);
 			
-			var nowHourForNext = nowH
+			var nowHourForNext = nowHParsed;
 			//now + minutes wait
 			
-			var nextTrainMin =  nowM + minutesWait
+			var nextTrainMin =  nowMParsed + minutesWait;
 			
 			if (nextTrainMin > 59) {
 				nowHourForNext + 1;
 				nextTrainMin = nextTrainMin - 59;
-			};
+			} else if (nextTrainMin < 10) {
+				nextTrainMin = "0" + nextTrainMin;
+			}
 			
-			nextTrain = nowHourForNext + ":" + nextTrainMin.toString().slice(0, 2);
+			nextTrain = nowHourForNext + ":" + nextTrainMin;
 			
 			
 			
 			//nextTime = now + minutesWait
 			//update nextTrain variable
 			//update minutesWait variable
+		}, 
+		
+		append: function () {
+			$("#new-train").append( "<tr>" +
+				"<td id='nameAdd'>" + childSnapshot.val().name  + "</td>" +
+				"<td id='destAdd'>" + childSnapshot.val().destination + "</td>" +
+				"<td id='freqAdd'>" + "Every " + childSnapshot.val().frequency + " min." + "</td>" +
+				"<td id='freqAdd'>" + nextTrain + "</td>" +
+				"<td id='freqAdd'>" + minutesWait + " min." + "</td>"
+				)
 		}
 	};
-	math.calculate();
+	mathVar.calculate();
+	mathVar.append();
 					
-	$("#new-train").append( "<tr>" +
-		"<td id='nameAdd'>" + childSnapshot.val().name  + "</td>" +
-		"<td id='destAdd'>" + childSnapshot.val().destination + "</td>" +
-		"<td id='freqAdd'>" + "Every " + childSnapshot.val().frequency + " min." + "</td>" +
-		"<td id='freqAdd'>" + nextTrain + "</td>" +
-		"<td id='freqAdd'>" + minutesWait + " min." + "</td>"
-		);
+	
 });
 });
 
