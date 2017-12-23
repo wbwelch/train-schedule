@@ -15,18 +15,6 @@ var config = {
 var database = firebase.database();
 
 
-
-//var randomTime = "12:47";
-//var randomFormat = "00:00 PM";
-//var convertedDate = moment(randomTime, randomFormat);
-
-//var currentHour = moment().hour();
-//var currentMin = moment().minutes();
-
-
-
-//if 12 or smaller, print time as is + AM. If 13 or higher, convert and then print
-
 $("#submit").on("click", function() {
 	event.preventDefault();
 	
@@ -75,8 +63,7 @@ database.ref().on("child_added", function(childSnapshot) {
 	  //console.log(childSnapshot.val().firstTime);
 	  //console.log(childSnapshot.val().frequency);
 	  //console.log(childSnapshot.val().timeAdded);
-
-//incoorperate moment 
+	
 	var mathVar = {
 		
 		nextTrain: "00:00",
@@ -84,40 +71,39 @@ database.ref().on("child_added", function(childSnapshot) {
 		
 		calculate: function () {
 			var freqTrain = childSnapshot.val().frequency;
-			console.log("Frequency: " + freqTrain);
+			//console.log("Frequency: " + freqTrain);
 			
 			var firstTime = childSnapshot.val().firstTime;
 			var firstTimeConv = moment(firstTime, "HH:mm").format("HH:mm");
-			console.log("First train: " + firstTime);
+			//console.log("First train: " + firstTime);
 			
 			var firstH = firstTimeConv.slice(0, 2);
 			var firstM = firstTimeConv.slice(3, 5);
-		var firstHParsed = parseInt(firstH);
-		var firstMParsed = parseInt(firstM);
-						console.log("firstM: " + firstM);
+			var firstHParsed = parseInt(firstH);
+			var firstMParsed = parseInt(firstM);
+			//console.log("firstM: " + firstM);
 
 			var firstHourConv = firstHParsed * 60;
 			var firstTotalMin = firstHourConv + firstMParsed;
-		var firstTotalMinParsed = parseInt(firstTotalMin);
-						console.log("First min total: " + firstTotalMin);
+			var firstTotalMinParsed = parseInt(firstTotalMin);
+			//console.log("First min total: " + firstTotalMin);
 			
 			var now = moment().format("HH:mm");
-						console.log("Now: " + now);
+			//console.log("Now: " + now);
 			var nowH = now.slice(0,2);
 			var nowM = now.slice(3, 5);
-		var nowHParsed = parseInt(nowH);
-		var nowMParsed = parseInt(nowM);
-						console.log("nowM: " + nowM);
+			var nowHParsed = parseInt(nowH);
+			var nowMParsed = parseInt(nowM);
+			//console.log("nowM: " + nowM);
 			var nowHourConv = nowHParsed * 60;
-		var nowTotalMin = nowHourConv + nowMParsed;
-						console.log("Now min total: " + nowTotalMin);
+			var nowTotalMin = nowHourConv + nowMParsed;
+			//console.log("Now min total: " + nowTotalMin);
 			
 			var difTime = nowTotalMin - firstTotalMin;
 			//console.log("Difference in min: " + difTime);
 			minutesWait = freqTrain - (difTime % freqTrain);
 			
 			var nowHourForNext = nowHParsed;
-			//now + minutes wait
 			
 			var nextTrainMin =  nowMParsed + minutesWait;
 			
@@ -130,11 +116,6 @@ database.ref().on("child_added", function(childSnapshot) {
 			
 			nextTrain = nowHourForNext + ":" + nextTrainMin;
 			
-			
-			
-			//nextTime = now + minutesWait
-			//update nextTrain variable
-			//update minutesWait variable
 		}, 
 		
 		append: function () {
@@ -144,9 +125,10 @@ database.ref().on("child_added", function(childSnapshot) {
 				"<td id='freqAdd'>" + "Every " + childSnapshot.val().frequency + " min." + "</td>" +
 				"<td id='freqAdd'>" + nextTrain + "</td>" +
 				"<td id='freqAdd'>" + minutesWait + " min." + "</td>"
-				)
+				);
 		}
 	};
+	
 	mathVar.calculate();
 	mathVar.append();
 					
