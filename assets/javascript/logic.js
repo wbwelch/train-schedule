@@ -133,9 +133,11 @@ database.ref().on("child_added", function(childSnapshot) {
 					//add 0 to front of digit
 					nextTrainMin = "0" + nextTrainMin;
 				};
+				//if hours for next train time over 23
 				if (nowHourForNext > 23) {
 					nowHourForNext -= 24
 				};
+				//if hour for train is a single digit
 				if (nowHourForNext < 10) {
 					nowHourForNext = "0" + nowHourForNext; 
 				}
