@@ -64,97 +64,100 @@ database.ref().on("child_added", function(childSnapshot) {
 		minutesWait: 0,
 		//calculate time to next train
 		calculate: function () {
-			
+			//pull time
 			var freqTrain = childSnapshot.val().frequency;
 			var firstTime = childSnapshot.val().firstTime;
 			var firstTimeConv = moment(firstTime, "HH:mm").format("HH:mm");
 			
+			//parse first hour(s) and minute(s)
 			var firstH = firstTimeConv.slice(0, 2);
 			var firstM = firstTimeConv.slice(3, 5);
 			var firstHParsed = parseInt(firstH);
 			var firstMParsed = parseInt(firstM);
-
+			//first train in minutes
 			var firstHourConv = firstHParsed * 60;
 			var firstTotalMin = firstHourConv + firstMParsed;
 			var firstTotalMinParsed = parseInt(firstTotalMin);
-			
+			//now variable
 			var now = moment().format("HH:mm");
 			
+			//parse now hour(s) and minute(s)
 			var nowH = now.slice(0,2);
 			var nowM = now.slice(3, 5);
 			var nowHParsed = parseInt(nowH);
 			var nowMParsed = parseInt(nowM);
-
+			//now in minutes
 			var nowHourConv = nowHParsed * 60;
 			var nowTotalMin = nowHourConv + nowMParsed;
-			
+			//if future first train by at least an hour
 			if (firstHParsed > nowHParsed) {
-				
-				var difTime = firstTotalMin - nowTotalMin;
-				
-				var nowHourForNext = firstHParsed;
-				var nextTrainMin = firstMParsed;
-			
-				var hourWaitTemp = firstHParsed - nowHParsed;
-				var minConv = hourWaitTemp * 60;
-				
-				minutesWait = difTime;
-			
-				nextTrain = nowHourForNext + ":" + nextTrainMin;
+				//minutes wait is difference in time in minutes
+				minutesWait = firstTotalMin - nowTotalMin;
+				//first train is next train
+				nextTrain = firstHParsed + ":" + firstMParsed;
 				
 			} 
+			//if future first train same hour
 			else if (firstHParsed === nowHParsed && firstMParsed > nowMParsed) {
-				var difTime = firstTotalMin - nowTotalMin;
-				
-				var nowHourForNext = firstHParsed;
-				var nextTrainMin = firstMParsed;
-			
-				var hourWaitTemp = firstHParsed - nowHParsed;
-				var minConv = hourWaitTemp * 60;
-				
-				minutesWait = difTime;
-			
-				nextTrain = nowHourForNext + ":" + nextTrainMin;
+				//minutes wait is difference in time in minutes
+				minutesWait = firstTotalMin - nowTotalMin;
+				//next train is first train
+				nextTrain = firstHParsed + ":" + firstMParsed;
 			} 
+			//if past first train
 			else {
-			
+				//difference in time in minutes
 				var difTime = nowTotalMin - firstTotalMin;
-
+				//minutes wait update
 				minutesWait = freqTrain - (difTime % freqTrain);
-
+				//next train time, hour
 				var nowHourForNext = nowHParsed;
-
+				//next train time, minutes
 				var nextTrainMin =  nowMParsed + minutesWait;
+				//if minutes for next train (in time) is > 60
 				if (nextTrainMin > 60) {
-					var minHolder = nextTrainMin % 60;
+					//find hours
 					var loops = Math.floor(nextTrainMin / 60);
+					//add hours to time
 					nowHourForNext = nowHourForNext + loops;
-					nextTrainMin = minHolder;
+					//next train minutes are the remainder from minutes / 60
+					nextTrainMin = nextTrainMin % 60;
 				}
-				else if (nextTrainMin > 59) {
+				//if minutes for next train (in time) is 60
+				else if (nextTrainMin === 60) {
+					//next train minutes are 0
 					nextTrainMin = nextTrainMin - 60;
 				};
+				//if minutes for next train (in time) is a single digit
 				if (nextTrainMin < 10) {
+					//add 0 to front of digit
 					nextTrainMin = "0" + nextTrainMin;
 				};
-
+				//next train time
 				nextTrain = nowHourForNext + ":" + nextTrainMin;
 			};
 		}, 
-		
+		//append to table method
 		append: function () {
 			$("#new-train").append( "<tr>" +
+			   //train name
 				"<td id='nameAdd'>" + childSnapshot.val().name  + "</td>" +
+			   //train destination
 				"<td id='destAdd'>" + childSnapshot.val().destination + "</td>" +
+			   //train frequency
 				"<td id='freqAdd'>" + "Every " + childSnapshot.val().frequency + " min." + "</td>" +
+			   //first train time
 				"<td id='freqAdd'>" + childSnapshot.val().firstTime + "</td>" +
+			   //next train time
 				"<td id='freqAdd'>" + nextTrain + "</td>" +
+			   //minutes to next train
 				"<td id='freqAdd'>" + minutesWait + " min." + "</td>"
 				);
 		}
 	};
-	
+	//call calculate
 	mathVar.calculate();
+	//call append to table
 	mathVar.append();
 					
 });

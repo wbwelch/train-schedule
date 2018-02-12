@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Train Schedule</title>
+	<meta charset="UTF-8">
+	<title>Train Schedule</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
@@ -10,10 +10,12 @@
 </head>
 
 <body>
+	<!--jumbotron-->
 	<div class="jumbotron">
 		<h1>Wanna go for a ride?</h1>
 		<h2>We are here to help.</h2>
 	</div>
+	<!--table header row-->
 	<table>
 		<trow>
 			<th>Train Name</th>
@@ -23,33 +25,37 @@
 			<th>Next Arrival</th>
 			<th>Minutes Away</th>
 		</trow>
-		<tbody id="new-train">
-					
-		</tbody>
+		<!--table body-->
+		<tbody id="new-train"></tbody>
 	</table>
-	
-	<form id="add-employee">
+	<!--new train form-->
+	<form id="add-train">
 			<h3>Add Train</h3>
+			<!--train name-->
 			 <div class="form-group">
 				<label for="name">Train Name</label>
     			<textarea class="form-control" id="name" rows="1"></textarea>
   			</div>
+			<!--train destination-->
 			 <div class="form-group">
 				<label for="destination">Destination</label>
     			<textarea class="form-control" id="destination" rows="1"></textarea>
   			</div>
+			<!--first train time-->
 			 <div class="form-group">
 				<label for="first-time">First Train Time (HH:mm - military time)<span id="invalid-time"></span></label>
     			<textarea class="form-control" id="first-time" rows="1"></textarea>
   			</div>
+			<!--last train time-->
 			 <div class="form-group">
 				<label for="frequency">Frequency (min.)<span id="invalid-char"></span></label>
     			<textarea class="form-control" value="" id="frequency" rows="1"></textarea>
   			</div>
+			<!--submit button-->
 			<button type="submit" class="btn btn-primary" id="submit">Submit</button>
 		</form>
 	
-	
+	<!--javascript links-->
 	<script src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
