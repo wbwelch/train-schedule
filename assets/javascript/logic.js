@@ -106,13 +106,18 @@ database.ref().on("child_added", function(childSnapshot) {
 			var nowHourForNext = nowHParsed;
 			
 			var nextTrainMin =  nowMParsed + minutesWait;
-			
-			if (nextTrainMin > 59) {
-				nowHourForNext + 1;
-				nextTrainMin = nextTrainMin - 59;
-			} else if (nextTrainMin < 10) {
-				nextTrainMin = "0" + nextTrainMin;
+			if (nextTrainMin > 60) {
+				var minHolder = nextTrainMin % 60;
+				var loops = Math.floor(nextTrainMin / 60);
+				nowHourForNext = nowHourForNext + loops;
+				nextTrainMin = minHolder;
 			}
+			else if (nextTrainMin > 59) {
+				nextTrainMin = nextTrainMin - 60;
+			};
+			if (nextTrainMin < 10) {
+				nextTrainMin = "0" + nextTrainMin;
+			};
 			
 			nextTrain = nowHourForNext + ":" + nextTrainMin;
 			
