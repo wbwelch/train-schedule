@@ -5,8 +5,12 @@ A train schedule web application that takes in a train name, train destination, 
 ## Getting Started
 
 Fill in the user entry fields and click 'submit.'
+
+## Deployed
+
+**Deployed At:** https://wbwelch.github.com/train-schedule
  
 
 ## Authors
 
-* **Whitney Welch** - (https://github.com/PurpleBooth)
+* **Whitney Welch** - https://whitneywelch.com
