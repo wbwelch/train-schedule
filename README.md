@@ -8,7 +8,7 @@ Fill in the user entry fields and click 'submit.'
 
 ## Deployed
 
-**Deployed At:** https://wbwelch.github.com/train-schedule
+**Deployed At:** https://wbwelch.github.io/train-schedule
  
 
 ## Authors
