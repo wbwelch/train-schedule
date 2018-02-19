@@ -11,6 +11,6 @@ Fill in the user entry fields and click 'submit.'
 **Deployed At:** https://wbwelch.github.io/train-schedule
  
 
-## Authors
+## Author
 
-* **Whitney Welch** - https://whitneywelch.com
+**Whitney Welch** - https://whitneywelch.com
